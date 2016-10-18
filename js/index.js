@@ -179,6 +179,9 @@ function displayBoard() {
   topSide += 29; cellHTML += "<div onclick='setColor(" + '"white"' + ")' class='cell' style='top: " + topSide + "px; left: " + leftSide + "px;'><div class='pin white'></div></div>";
 
   $("#board").html(cellHTML);
+  $('#btnCheck').mouseup();
+  $('#btnReset').mouseup();
+  $('#btnSwitch').mouseup();
 }
 
 $(document).ready( function() {
@@ -194,6 +197,24 @@ $(document).ready( function() {
       }
     }
   }
+
+  $('#btnCheck').on("mousedown", function() {
+    $("#btnCheck").css("background-image", "url(images/check_border.png)").css("background-size", "29px 29px");
+  }).on("mouseup", function(){
+    $("#btnCheck").css("background-image", "url(images/check.png)").css("background-size", "29px 29px");
+  });
+
+  $('#btnReset').on("mousedown", function() {
+    $("#btnReset").css("background-image", "url(images/reset_border.png)").css("background-size", "29px 29px");
+  }).on("mouseup", function(){
+    $("#btnReset").css("background-image", "url(images/reset.png)").css("background-size", "29px 29px");
+  });
+
+  $('#btnSwitch').on("mousedown", function() {
+    $("#btnSwitch").css("background-image", "url(images/double_arrow_border.png)").css("background-size", "29px 29px");
+  }).on("mouseup", function(){
+    $("#btnSwitch").css("background-image", "url(images/double_arrow.png)").css("background-size", "29px 29px");
+  });
 
   displayBoard();
 
