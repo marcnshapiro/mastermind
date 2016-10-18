@@ -7,21 +7,38 @@ body{
 
 #playArea {
   position: relative;
-  width: 225px;
-  height: auto;
+  width: 220px;
+  height: 455px;
   background-color: coral;
   border: 2px solid black; 
 }
 
 #board {
-  position: relative;
-  width: 225px;
-  height: 360px;
+  position: absolute;
+  width: 220px;
+  height: 350px;
+  top: 60px;
+}
+
+#status {
+  position: absolute;
+  width: 205px;
+  height: 32px;
+  top: 415px;
+  left: 5px;
+  border: 1px solid black;
+  display: none;
 }
 
 #btnCheck {
   position: absolute;
-  top: 200px;
+  top: 260px;
+  left: 175px;
+}
+
+#btnReset {
+  position: absolute;
+  top: 318px;
   left: 175px;
 }
 
