@@ -4,18 +4,124 @@ var topSide = 0;
 var leftSide = 0;
 
 var cellHTML = "";
-var cellArr = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
-var pinArr = [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]];
+var cellArr = clearCells();
+var pinArr = clearPins();
 var sequence = [0,0,0,0];
+var combinations = [];  // An array of sequences
+var S = [];  // An array of sequences
 var done;
-var guess = 0;
+var guessNr = 0;
+var guess = "";
 
-var sndBeep = new Audio("data:audio/wav;base64,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qJrx4KOQjahZxWbcZgztj2c49nKmkId44S71j0c8eV9yDK6uPRzx5X18eDvjvQ6yKo9ZSS6l//8elePK/Lf//IInrOF/FvDoADYAGBMGb7FtErm5MXMlmPAJQVgWta7Zx2go+8xJ0UiCb8LHHdftWyLJE0QIAIsI+UbXu67dZMjmgDGCGl1H+vpF4NSDckSIkk7Vd+sxEhBQMRU8j/12UIRhzSaUdQ+rQU5kGeFxm+hb1oh6pWWmv3uvmReDl0UnvtapVaIzo1jZbf/pD6ElLqSX+rUmOQNpJFa/r+sa4e/pBlAABoAAAAA3CUgShLdGIxsY7AUABPRrgCABdDuQ5GC7DqPQCgbbJUAoRSUj+NIEig0YfyWUho1VBBBA//uQZB4ABZx5zfMakeAAAAmwAAAAF5F3P0w9GtAAACfAAAAAwLhMDmAYWMgVEG1U0FIGCBgXBXAtfMH10000EEEEEECUBYln03TTTdNBDZopopYvrTTdNa325mImNg3TTPV9q3pmY0xoO6bv3r00y+IDGid/9aaaZTGMuj9mpu9Mpio1dXrr5HERTZSmqU36A3CumzN/9Robv/Xx4v9ijkSRSNLQhAWumap82WRSBUqXStV/YcS+XVLnSS+WLDroqArFkMEsAS+eWmrUzrO0oEmE40RlMZ5+ODIkAyKAGUwZ3mVKmcamcJnMW26MRPgUw6j+LkhyHGVGYjSUUKNpuJUQoOIAyDvEyG8S5yfK6dhZc0Tx1KI/gviKL6qvvFs1+bWtaz58uUNnryq6kt5RzOCkPWlVqVX2a/EEBUdU1KrXLf40GoiiFXK///qpoiDXrOgqDR38JB0bw7SoL+ZB9o1RCkQjQ2CBYZKd/+VJxZRRZlqSkKiws0WFxUyCwsKiMy7hUVFhIaCrNQsKkTIsLivwKKigsj8XYlwt/WKi2N4d//uQRCSAAjURNIHpMZBGYiaQPSYyAAABLAAAAAAAACWAAAAApUF/Mg+0aohSIRobBAsMlO//Kk4soosy1JSFRYWaLC4qZBYWFRGZdwqKiwkNBVmoWFSJkWFxX4FFRQWR+LsS4W/rFRb/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////VEFHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU291bmRib3kuZGUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMjAwNGh0dHA6Ly93d3cuc291bmRib3kuZGUAAAAAAAAAACU=");  
-var sndBeep = new Audio("BeepTone.mp3");  
-
-var iwin = new Audio("audio/iwin.mp3");
+var iwon = new Audio("audio/iwon.mp3");
 var youwon = new Audio("audio/youwon.mp3");
 
+var iAmCodeMaker = true;
+var codeIndex = -1;
+var codeSet = false;
+
+function clearCells() {
+  return [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+}
+
+function clearPins() {
+  return [new Outcome(0,0),new Outcome(0,0),new Outcome(0,0),
+          new Outcome(0,0),new Outcome(0,0),new Outcome(0,0),
+          new Outcome(0,0),new Outcome(0,0),new Outcome(0,0),
+          new Outcome(0,0),new Outcome(0,0),new Outcome(0,0)]
+}
+
+function Outcome(black, white) {
+  this.white = white;
+  this.black = black;
+}
+
+outcomes = [new Outcome(0,0),new Outcome(0,1),new Outcome(0,2),
+            new Outcome(0,3),new Outcome(0,4),new Outcome(1,0),
+            new Outcome(1,1),new Outcome(1,2),new Outcome(1,3),
+            new Outcome(2,0),new Outcome(2,1),new Outcome(2,2),
+            new Outcome(3,0),new Outcome(4,0)]
+
+function Check(guess, solution) {
+  var black = 0;
+  var white = 0;
+  var sequenceDone = [0,0,0,0];
+  var guessDone = [0,0,0,0];
+  
+  for (let i = 0; i < 4; i++) {
+    if (guess[i] === solution[i]) {
+      black++;
+      sequenceDone[i] = 1;
+      guessDone[i] = 1;
+    }
+  }
+
+  if (black < 3) {
+    for (let j = 0; j < 4; j++) {
+      if (guessDone[j] === 0) {
+        for (let k = 0; k < 4; k++) {
+          if (sequenceDone[k] === 0) {
+            if (guess[j] === solution[k]) {
+              white++;
+              guessDone[j] = 1;
+              sequenceDone[k] = 1;
+            }
+          }
+        }
+      }
+    }     
+  }
+
+  return new Outcome(black, white);
+}
+
+function getNextGuess() {
+  // assume we have some list of combinations
+  var min = 2147483647;
+  var minCombination = null;
+
+  for (let i = 0; i < S.length; i++) {
+    var guess = S[i];
+    var max = 0;
+
+    for (let j = 0; j < outcomes.length; j++) {
+      var desiredOutcome = outcomes[j];
+      var count = 0;
+
+      for (let k = 0; k < S.length; k++) {
+        var solution = S[k];
+        var outcome = Check(guess, solution);
+
+        if (outcome.black === desiredOutcome.black && outcome.white === desiredOutcome.white) {
+          count++;
+        }
+      }
+      if (count > max)
+        max = count;
+    }
+    if (max < min) {
+      min = max;
+      minCombination = guess;
+    }
+  }
+
+  return minCombination;
+}
+
+function reduceS() {
+  var desiredOutcome = pinArr[guessNr];
+  guess = cellArr[guessNr];
+
+  for (let i = S.length - 1; i >= 0; i--) {
+    var solution = S[i];
+    var outcome = Check(guess, solution);
+    
+    if (outcome.black != desiredOutcome.black || outcome.white != desiredOutcome.white) {
+      S.splice(i, 1);
+    }
+  }
+  for (let i = 0; i < S.length; i++)
+}
 
 // Returns a random integer between min (included) and max (included)
 // Using Math.round() will give you a non-uniform distribution!
@@ -26,11 +132,31 @@ function getRandomIntInclusive(min, max) {
 }
 
 function setColor(color) {
-  useColor = color;
+  if (iAmCodeMaker) {
+    useColor = color;
+  } else {
+    codeIndex++;
+
+    switch (color) {
+      case "red": sequence[codeIndex] = 1; break;
+      case "green": sequence[codeIndex] = 2; break;
+      case "blue": sequence[codeIndex] = 3; break;
+      case "orange": sequence[codeIndex] = 4; break;
+      case "black": sequence[codeIndex] = 5; break;
+      case "white": sequence[codeIndex] = 6; break;
+    }
+
+    switch(codeIndex) {
+      case 0: $("#code1").css("background-color", color); break;
+      case 1: $("#code2").css("background-color", color); break;
+      case 2: $("#code3").css("background-color", color); break;
+      case 3: $("#code4").css("background-color", color); break;
+    }
+  }
 }
 
 function setPinColor(obj, r, c) {
-  if (r === guess) {
+  if (r === guessNr) {
     switch (useColor) {
       case "red": cellArr[r][c] = 1; break;
       case "green": cellArr[r][c] = 2; break;
@@ -73,10 +199,14 @@ function displayBoard() {
     leftSide = 135;
 
     cellHTML += "<div class='cell' style='top: " + topSide + "px; left: " + leftSide + "px;'>"
-    pinCode = pinArr[r][0]*10 + pinArr[r][1];
+    pinCode = pinArr[r].black*10 + pinArr[r].white;
 
     if (pinCode === 40) {
-      youwon.play();
+      if (iAmCodeMaker) {
+        youwon.play();
+      } else {
+        iwon.play();
+      }
     }
 
     switch (pinCode) {
@@ -184,6 +314,86 @@ function displayBoard() {
   $('#btnSwitch').mouseup();
 }
 
+function codeBreaker() {
+  var index = -1;
+
+  if (guess === "") {
+    guess = [1,1,2,2];  // Initial guess
+  } else {
+    guess = getNextGuess();
+  }
+
+  for (i = 0; i < combinations.length; i++) {
+    if (combinations[i][0] === guess[0] && combinations[i][1] === guess[1] && combinations[i][2] === guess[2] && combinations[i][3] === guess[3]) {
+      index = i;
+      break;
+    }
+  }
+
+  if (index > -1) {
+    combinations.splice(index, 1);
+  }
+
+    cellArr[guessNr][0] = guess[0];
+    cellArr[guessNr][1] = guess[1];
+    cellArr[guessNr][2] = guess[2];
+    cellArr[guessNr][3] = guess[3];
+
+    pinArr[guessNr] = Check(cellArr[guessNr], sequence);
+   
+    displayBoard();
+
+    if (pinArr[guessNr].black === 4 || guessNr === 11) {
+      switch (sequence[0]) {
+        case 1: $("#code1").css('background-color', 'red');break;
+        case 2: $("#code1").css('background-color', 'green');break;
+        case 3: $("#code1").css('background-color', 'blue');break;
+        case 4: $("#code1").css('background-color', 'orange');break;
+        case 5: $("#code1").css('background-color', 'black');break;
+        case 6: $("#code1").css('background-color', 'white');break;
+      }
+      switch (sequence[1]) {
+        case 1: $("#code2").css('background-color', 'red');break;
+        case 2: $("#code2").css('background-color', 'green');break;
+        case 3: $("#code2").css('background-color', 'blue');break;
+        case 4: $("#code2").css('background-color', 'orange');break;
+        case 5: $("#code2").css('background-color', 'black');break;
+        case 6: $("#code2").css('background-color', 'white');break;
+      }
+      switch (sequence[2]) {
+        case 1: $("#code3").css('background-color', 'red');break;
+        case 2: $("#code3").css('background-color', 'green');break;
+        case 3: $("#code3").css('background-color', 'blue');break;
+        case 4: $("#code3").css('background-color', 'orange');break;
+        case 5: $("#code3").css('background-color', 'black');break;
+        case 6: $("#code3").css('background-color', 'white');break;
+      }
+      switch (sequence[3]) {
+        case 1: $("#code4").css('background-color', 'red');break;
+        case 2: $("#code4").css('background-color', 'green');break;
+        case 3: $("#code4").css('background-color', 'blue');break;
+        case 4: $("#code4").css('background-color', 'orange');break;
+        case 5: $("#code4").css('background-color', 'black');break;
+        case 6: $("#code4").css('background-color', 'white');break;
+      }
+    }
+
+    reduceS();
+    
+    guessNr++;
+
+    if (guessNr === 12) {
+      if (iAmCodeMaker) {
+        iwin.play();
+      } else {
+        youwon.play();
+      }
+
+      displayBoard();
+    }
+
+}
+
 $(document).ready( function() {
   "use strict";
 
@@ -219,24 +429,40 @@ $(document).ready( function() {
   displayBoard();
 
   $("#btnReset").on("click", function() {
-    cellArr = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
-    pinArr = [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]];
+    cellArr = clearCells();
+    pinArr = clearPins();
     sequence = [0,0,0,0];
-    guess = 0;
+    guessNr = 0;
+    guess = "";
+    codeIndex = -1;
+    codeSet = false;
 
     $("#code1").css('background-color', 'gray');
     $("#code2").css('background-color', 'gray');
     $("#code3").css('background-color', 'gray');
     $("#code4").css('background-color', 'gray');
 
-    for (let i = 0; i < 4; i++) {
-      done = false;
-      while (!done) {
-        done = true;
-        sequence[i] = getRandomIntInclusive(1, 6);
-        for (let j = 0; j < i; j++) {
-          if (sequence[i] === sequence[j]) done = false;
+    if (iAmCodeMaker) {
+      for (let i = 0; i < 4; i++) {
+        done = false;
+        while (!done) {
+          done = true;
+          sequence[i] = getRandomIntInclusive(1, 6);
+          for (let j = 0; j < i; j++) {
+            if (sequence[i] === sequence[j]) done = false;
+          }
         }
+      }
+    } else {
+      for (var i = 1; i <= 6; i++) {
+        for (var j = 1; j <= 6; j++) {
+          for (var k = 1; k <= 6; k++) {
+            for (var l = 1; l <= 6; l++) {
+              combinations.push([i,j,k,l]);             
+              S.push([i,j,k,l]); 
+            }
+          }        
+        }        
       }
     }
 
@@ -244,43 +470,22 @@ $(document).ready( function() {
   });
 
   $("#btnCheck").on("click", function() {
-    var black = 0;
-    var white = 0;
-    var sequenceDone = [0,0,0,0];
-    var guessDone = [0,0,0,0];
-    
-    if (cellArr[guess][0] > 0 && cellArr[guess][1] > 0 && cellArr[guess][2] > 0 && cellArr[guess][3] > 0) {
-      for (let i = 0; i < 4; i++) {
-        if (sequence[i] === cellArr[guess][i]) {
-          black++;
-          sequenceDone[i] = 1;
-          guessDone[i] = 1;
-        }
-      }
-      
-      if (black < 3) {
-        for (let j = 0; j < 4; j++) {
-          if (guessDone[j] === 0) {
-            for (let k = 0; k < 4; k++) {
-              if (sequenceDone[k] === 0) {
-                if (cellArr[guess][j] === sequence[k]) {
-                  white++;
-                  guessDone[j] = 1;
-                  sequenceDone[k] = 1;
-                }
-              }
-            }
-          }
-        } 
-        
-      }
-      
-      pinArr[guess][0] = black;
-      pinArr[guess][1] = white;
-      
+    if (!iAmCodeMaker
+    && $("#code1").css('background-color') != "rgb(128, 128, 128)" 
+    && $("#code2").css('background-color') != "rgb(128, 128, 128)" 
+    && $("#code3").css('background-color') != "rgb(128, 128, 128)" 
+    && $("#code4").css('background-color') != "rgb(128, 128, 128)") {
+      codeBreaker();
+      return;
+    }
+
+    if (cellArr[guessNr][0] > 0 && cellArr[guessNr][1] > 0 && cellArr[guessNr][2] > 0 && cellArr[guessNr][3] > 0) {
+
+      pinArr[guessNr] = Check(cellArr[guessNr], sequence);
+
       displayBoard();
 
-      if (black === 4 || guess === 11) {
+      if (pinArr[guessNr].black === 4 || guessNr === 11) {
         switch (sequence[0]) {
           case 1: $("#code1").css('background-color', 'red');break;
           case 2: $("#code1").css('background-color', 'green');break;
@@ -315,12 +520,22 @@ $(document).ready( function() {
         }
       }
       
-      guess++;
+      guessNr++;
 
-      if (guess === 12) {
-        iwin.play();
+      if (guessNr === 12) {
+        if (iAmCodeMaker) {
+          iwon.play();
+        } else {
+          youwon.play();
+        }
+
         displayBoard();
       }
     }
+  });
+
+  $("#btnSwitch").on("click", function() {
+    iAmCodeMaker = !iAmCodeMaker;
+    $("#btnReset").click();
   });
 });
