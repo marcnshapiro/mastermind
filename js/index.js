@@ -120,7 +120,6 @@ function reduceS() {
       S.splice(i, 1);
     }
   }
-  for (let i = 0; i < S.length; i++)
 }
 
 // Returns a random integer between min (included) and max (included)
@@ -132,8 +131,26 @@ function getRandomIntInclusive(min, max) {
 }
 
 function setColor(color) {
+  var c = 0;
+
   if (iAmCodeMaker) {
     useColor = color;
+
+    for (c = 0; c < 4; c++) {
+      if (cellArr[guessNr][c] === 0) break;
+    }
+
+    if (c < 4) {
+      switch (useColor) {
+        case "red": cellArr[guessNr][c] = 1; break;
+        case "green": cellArr[guessNr][c] = 2; break;
+        case "blue": cellArr[guessNr][c] = 3; break;
+        case "orange": cellArr[guessNr][c] = 4; break;
+        case "black": cellArr[guessNr][c] = 5; break;
+        case "white": cellArr[guessNr][c] = 6; break;
+      }
+    }
+    displayBoard();
   } else {
     codeIndex++;
 
