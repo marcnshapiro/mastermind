@@ -414,6 +414,8 @@ function codeBreaker() {
 $(document).ready( function() {
   "use strict";
 
+  //$('[data-toggle="tooltip"]').tooltip(); 
+
   for (let i = 0; i < 4; i++) {
     done = false;
     while (!done) {
@@ -553,6 +555,14 @@ $(document).ready( function() {
 
   $("#btnSwitch").on("click", function() {
     iAmCodeMaker = !iAmCodeMaker;
+    if (iAmCodeMaker) {
+      $("#maker_breaker").html("Code-Breaker");
+      $("#btnCheck").attr('title',"Click to check reponse");
+    } else {
+      $("#maker_breaker").html("Code-Maker");
+      $("#btnCheck").attr('title',"Click to approve reponse");
+    }
+
     $("#btnReset").click();
   });
 });

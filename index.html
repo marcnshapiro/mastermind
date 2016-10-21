@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
     <link rel="stylesheet" href="css/style.css">
 
     <title>Mastermind</title>
@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/resources/demos/style.css">
     <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>   
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
     <script src='js/index.js'></script>
   </head>
 
@@ -19,14 +19,15 @@
     <center>
       <div id="playArea">
         <h2>Mastermind</h2>
+        <h4>You are the <span id="maker_breaker">Code-Breaker</span></h4>
         <div id="board"></div>
-        <div class='cell' style='top: 415px; left:5px;'><div id="code1" class='pin gray'></div></div>    
-        <div class='cell' style='top: 415px; left:34px;'><div id="code2" class='pin gray'></div></div>
-        <div class='cell' style='top: 415px; left:63px;'><div id="code3" class='pin gray'></div></div>
-        <div class='cell' style='top: 415px; left:92px;'><div id="code4" class='pin gray'></div></div>
-        <button id='btnCheck' class='btn btn-custom'></button>
-        <button id='btnReset' class='btn btn-custom'></button>
-        <button id='btnSwitch' class='btn btn-custom'></button>
+        <div class='cell' style='top: 460px; left:5px;'><div id="code1" class='pin gray'></div></div>    
+        <div class='cell' style='top: 460px; left:34px;'><div id="code2" class='pin gray'></div></div>
+        <div class='cell' style='top: 460px; left:63px;'><div id="code3" class='pin gray'></div></div>
+        <div class='cell' style='top: 460px; left:92px;'><div id="code4" class='pin gray'></div></div>
+        <button id='btnCheck' class='btn btn-custom' data-toggle="tooltip" title="Click to check response"></button>
+        <button id='btnReset' class='btn btn-custom' data-toggle="tooltip" title="Click to start new game"></button>
+        <button id='btnSwitch' class='btn btn-custom' data-toggle="tooltip" title="Click to change role (Code Maker / Code Breaker"></button>
       </div>
     </center>
     <div id="audio"></div>

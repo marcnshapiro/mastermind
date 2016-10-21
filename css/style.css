@@ -5,10 +5,13 @@ body{
   font-family: 'Open Sans', sans-serif;
 }
 
+h4{
+  font-size: 19px;
+}
 #playArea {
   position: relative;
   width: 220px;
-  height: 455px;
+  height: 500px;
   background-color: coral;
   border: 2px solid black; 
 }
@@ -17,7 +20,7 @@ body{
   position: absolute;
   width: 220px;
   height: 350px;
-  top: 60px;
+  top: 105px;
 }
 
 #status {
@@ -32,23 +35,27 @@ body{
 
 #btnCheck {
   position: absolute;
-  top: 259px;
+  top: 304px;
   left: 175px;
   background-image: url("images/check.png");
 }
 
 #btnReset {
   position: absolute;
-  top: 317px;
+  top: 362px;
   left: 175px;
   background-image: url("images/reset.png");
 }
 
 #btnSwitch {
   position: absolute;
-  top: 375px;
+  top: 420px;
   left: 175px;
   background-image: url("images/double_arrow.png");
+}
+
+#maker_breaker {
+  color: yellow;
 }
 
 .cell {
@@ -150,5 +157,31 @@ body{
   background-color: transparent;
   width: 30px;
   height: 30px;
+}
+
+
+/* Tooltip */
+.test + .tooltip > .tooltip-inner {
+    background-color: #73AD21; 
+    color: #FFFFFF; 
+    border: 1px solid green; 
+    padding: 5px;
+    font-size: 15px;
+}
+/* Tooltip on top */
+.test + .tooltip.top > .tooltip-arrow {
+    border-top: 5px solid green;
+}
+/* Tooltip on bottom */
+.test + .tooltip.bottom > .tooltip-arrow {
+    border-bottom: 5px solid blue;
+}
+/* Tooltip on left */
+.test + .tooltip.left > .tooltip-arrow {
+    border-left: 5px solid red;
+}
+/* Tooltip on right */
+.test + .tooltip.right > .tooltip-arrow {
+    border-right: 5px solid black;
 }
 
